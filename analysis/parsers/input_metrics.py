@@ -123,6 +123,23 @@ def _hist_to_ms(entry: Dict[str, Any], field: str) -> Optional[Dict[str, Any]]:
     return result
 
 
+def _hist_raw(entry: Dict[str, Any], field: str) -> Optional[Dict[str, Any]]:
+    """Extract a histogram field without unit conversion (for count-based metrics)."""
+    h = entry.get(field, {}).get('histogram')
+    if not h:
+        return None
+    result = {}
+    for key in ('count', 'mean', 'median', 'min', 'max', 'p75', 'p95', 'p99', 'p999', 'stddev'):
+        v = h.get(key)
+        if v is None:
+            result[key] = None
+        elif key == 'count':
+            result[key] = int(v)
+        else:
+            result[key] = round(float(v), 3)
+    return result
+
+
 def compute_deltas(snapshots: List[InputMetricSnapshot], input_type: str) -> List[Dict[str, Any]]:
     """
     Compute per-interval counter deltas between consecutive snapshots.
@@ -233,7 +250,7 @@ def summarize(snapshots: List[InputMetricSnapshot], input_type: str) -> Dict[str
         }
         result["histograms"]["response_latency_ms"] = _hist_to_ms(final, "response_latency")
         result["histograms"]["request_processing_time_ms"] = _hist_to_ms(final, "request_processing_time")
-        result["histograms"]["events_per_batch"] = _hist_to_ms(final, "events_per_batch")
+        result["histograms"]["events_per_batch"] = _hist_raw(final, "events_per_batch")
 
     # Reliability issues
     issues = []
