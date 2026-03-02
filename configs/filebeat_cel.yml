@@ -1,0 +1,191 @@
+# Filebeat configuration for CEL input performance testing.
+# Variables are expanded by Filebeat from environment variables.
+# Set all ${VAR} values via environment before launching Filebeat.
+#
+# Required env vars:
+#   AKAMAI_URL            - Akamai API base URL (e.g. https://host.akamai.com)
+#   AKAMAI_CLIENT_TOKEN   - Akamai client token
+#   AKAMAI_ACCESS_TOKEN   - Akamai access token
+#   AKAMAI_CLIENT_SECRET  - Akamai client secret
+#   INTERVAL              - Polling interval (e.g. 5m)
+#   INITIAL_INTERVAL      - Lookback window for first run (e.g. 1h)
+#   EVENT_LIMIT           - Max events per API call (e.g. 10000)
+#   OUTPUT_DIR            - Directory for output.file events
+#   LOG_DIR               - Directory for Filebeat log files
+
+filebeat.inputs:
+- type: cel
+  interval: "${INTERVAL}"
+  max_executions: 10000
+  resource:
+    url: ${AKAMAI_URL}/siem/v1/configs/1
+    timeout: 60s
+  state:
+    client_token: "${AKAMAI_CLIENT_TOKEN}"
+    access_token: "${AKAMAI_ACCESS_TOKEN}"
+    client_secret: "${AKAMAI_CLIENT_SECRET}"
+    initial_interval: "${INITIAL_INTERVAL}"
+    recovery_interval: 6h
+    event_limit: "${EVENT_LIMIT}"
+  program: |-
+    state.with(
+      (
+        state.?cursor.recovery_mode.orValue(false) ?
+          {
+            "from": int(now - duration(state.recovery_interval)),
+            "to": int(now - duration("1m")),
+          }
+        : state.?cursor.last_offset.hasValue() ?
+          {
+            "offset": state.cursor.last_offset,
+          }
+        :
+          {
+            "from": max(int(now - duration(state.initial_interval)), int(now - duration("12h"))),
+            "to": int(now - duration("1m")),
+          }
+      ).as(params,
+        (
+          state.url.trim_right("/") + "?" + {
+            "limit": [string(state.event_limit)],
+            ?"from": params.?from.optMap(v, [string(v)]),
+            ?"to": params.?to.optMap(v, [string(v)]),
+            ?"offset": params.?offset.optMap(v, [string(v)]),
+          }.format_query()
+        ).as(request_url,
+          now.format("20060102T15:04:05-0700").as(timestamp,
+            uuid().as(nonce,
+              sprintf(
+                "EG1-HMAC-SHA256 client_token=%s;access_token=%s;timestamp=%s;nonce=%s;",
+                [state.client_token, state.access_token, timestamp, nonce]
+              ).as(sig_base,
+                base64(hmac(timestamp, "sha256", bytes(state.client_secret))).as(sig_key,
+                  request_url.parse_url().as(u,
+                    sprintf(
+                      "GET\t%s\t%s\t%s?%s\t\t\t%s",
+                      [
+                        u.Scheme,
+                        u.Host,
+                        u.Path,
+                        u.RawQuery,
+                        sig_base,
+                      ]
+                    ).as(to_sign,
+                      base64(hmac(to_sign, "sha256", bytes(sig_key))).as(signature,
+                        sig_base + "signature=" + signature
+                      )
+                    )
+                  )
+                )
+              ).as(auth_header,
+                request(
+                  "GET",
+                  request_url
+                ).with(
+                  {
+                    "Header": {
+                      "Authorization": [auth_header],
+                    },
+                  }
+                ).do_request().as(resp,
+                  (resp.StatusCode == 200) ?
+                    string(resp.Body).split("\n").filter(line, line != "").as(lines,
+                      {
+                        "events": lines.map(line, {"message": line}),
+                        "cursor": {
+                          ?"last_offset": (lines.size() > 0) ?
+                            lines[lines.size() - 1].decode_json().as(lastEvent,
+                              (has(lastEvent.offset) && lastEvent.offset != "") ?
+                                optional.of(lastEvent.offset)
+                              :
+                                optional.none()
+                            )
+                          :
+                            optional.none(),
+                          "recovery_mode": false,
+                        },
+                        "want_more": lines.size() >= int(state.event_limit),
+                      }
+                    )
+                  : (resp.StatusCode == 416 || resp.StatusCode == 400) ?
+                    {
+                      "events": [
+                        {
+                          "error": {
+                            "code": string(resp.StatusCode),
+                            "id": string(resp.Status),
+                            "message": "GET " + request_url + (
+                              (size(resp.Body) != 0) ?
+                                string(resp.Body)
+                              :
+                                string(resp.Status) + " (" + string(resp.StatusCode) + ")"
+                            ),
+                          },
+                        }
+                      ],
+                      "cursor": state.cursor.drop("last_offset").with(
+                        {
+                          "recovery_mode": true,
+                        }
+                      ),
+                      "want_more": true,
+                    }
+                  :
+                    {
+                      "events": {
+                        "error": {
+                          "code": string(resp.StatusCode),
+                          "id": string(resp.Status),
+                          "message": "GET " + request_url + (
+                            (size(resp.Body) != 0) ?
+                              string(resp.Body)
+                            :
+                              string(resp.Status) + " (" + string(resp.StatusCode) + ")"
+                          ),
+                        },
+                      },
+                      "want_more": false,
+                    }
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  tags:
+    - preserve_original_event
+    - akamai-siem
+
+# =============================== HTTP Endpoint ================================
+
+http.host: 127.0.0.1
+http.port: 5066
+http.pprof.enabled: true
+http.pprof.block_profile_rate: 1
+http.pprof.mem_profile_rate: 1
+http.pprof.mutex_profile_rate: 1
+
+# ================================== Output ====================================
+
+output.file:
+  path: "${OUTPUT_DIR}"
+  filename: filebeat_output
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+# ================================== Logging ===================================
+
+logging.level: info
+logging.to_files: true
+logging.metrics.period: 1m
+logging.files:
+  path: "${LOG_DIR}"
+  name: filebeat
+  keepfiles: 1024
+  permissions: 0640
