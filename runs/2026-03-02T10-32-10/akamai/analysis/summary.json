@@ -1,0 +1,171 @@
+{
+  "input_type": "akamai",
+  "run_config": {
+    "run_name": "2026-03-02T10-32-10",
+    "started_at": "2026-03-02T10:32:10Z",
+    "parameters": {
+      "duration": "30m",
+      "duration_secs": 1800,
+      "interval": "1m",
+      "initial_interval": "1h",
+      "event_limit": "50000",
+      "akamai_workers": "1",
+      "akamai_batch_size": "1000",
+      "input_type": "both",
+      "filebeat_binary": "/Users/chemamartinez/devel/akamai-test/../beats-akamai/x-pack/filebeat/filebeat"
+    },
+    "api_constants": {
+      "offset_ttl_s": 120,
+      "hmac_validity": "120s",
+      "note": "These reflect API server characteristics, not Filebeat configuration."
+    }
+  },
+  "monitoring": {
+    "duration": {
+      "start": "2026-03-02T12:03:19.979000+01:00",
+      "end": "2026-03-02T12:31:19.924000+01:00",
+      "elapsed_minutes": 28.0,
+      "snapshots": 29
+    },
+    "throughput": {
+      "total_events_published": 27150000,
+      "avg_eps": 16161.24
+    },
+    "pipeline": {
+      "avg_active_events": 1018.7586206896551,
+      "max_active_events": 2105.0
+    },
+    "queue": {
+      "avg_fill_pct": 0.31832974137931036,
+      "max_fill_pct": 0.6578125
+    },
+    "output": {
+      "total_acked": 28050000,
+      "total_failed": 0,
+      "total_dropped": 0,
+      "avg_latency_mean": 0.0005724676724137931,
+      "avg_latency_p95": 0.0,
+      "avg_latency_p99": 0.0
+    },
+    "resources": {
+      "avg_cpu_total_ms": 65379.03448275862,
+      "avg_memory_alloc_mb": 21.86,
+      "max_memory_alloc_mb": 30.01,
+      "avg_rss_mb": 121.19,
+      "max_rss_mb": 123.23,
+      "avg_goroutines": 42.44827586206897,
+      "max_goroutines": 43.0,
+      "avg_load_norm_1": 0.25696206896551727,
+      "max_load_norm_1": 0.4484,
+      "first_rss_mb": 91.25,
+      "last_rss_mb": 123.23
+    },
+    "issues": [
+      "growing_pipeline_active: possible backpressure"
+    ]
+  },
+  "input_metrics": {
+    "input_type": "akamai",
+    "snapshots_count": 29,
+    "elapsed_secs": 1740,
+    "throughput": {
+      "total_events_published": 27100000,
+      "total_events_received": 27100000,
+      "total_batches_published": 542,
+      "total_http_requests": 543,
+      "http_2xx_total": 543,
+      "http_errors_total": 0,
+      "http_success_rate_pct": 100.0
+    },
+    "histograms": {
+      "batch_processing_time_ms": {
+        "count": 542,
+        "mean": 2625.344,
+        "median": 2592.854,
+        "min": 2519.698,
+        "max": 4907.208,
+        "p75": 2618.855,
+        "p95": 2724.245,
+        "p99": 3676.5,
+        "p999": 4907.208,
+        "stddev": 180.463
+      },
+      "http_round_trip_time_ms": {
+        "count": 543,
+        "mean": 463.653,
+        "median": 459.71,
+        "min": 411.853,
+        "max": 829.793,
+        "p75": 471.477,
+        "p95": 501.907,
+        "p99": 597.714,
+        "p999": 829.793,
+        "stddev": 30.268
+      },
+      "response_latency_ms": {
+        "count": 543,
+        "mean": 463.828,
+        "median": 459.861,
+        "min": 412.031,
+        "max": 829.944,
+        "p75": 471.66,
+        "p95": 502.057,
+        "p99": 597.87,
+        "p999": 829.944,
+        "stddev": 30.271
+      },
+      "request_processing_time_ms": {
+        "count": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "p999": 0.0,
+        "stddev": 0.0
+      },
+      "events_per_batch": {
+        "count": 542,
+        "mean": 50000.0,
+        "median": 50000.0,
+        "min": 50000.0,
+        "max": 50000.0,
+        "p75": 50000.0,
+        "p95": 50000.0,
+        "p99": 50000.0,
+        "p999": 50000.0,
+        "stddev": 0.0
+      }
+    },
+    "akamai": {
+      "akamai_requests_total": 543,
+      "akamai_requests_success": 543,
+      "akamai_requests_errors": 0,
+      "offset_expired_total": 0,
+      "offset_ttl_drops_total": 1,
+      "hmac_refresh_total": 0,
+      "cursor_drops_total": 0,
+      "from_clamped_total": 0,
+      "api_400_fatal_total": 0,
+      "errors_total": 0,
+      "workers_active_gauge": 1.0,
+      "worker_utilization": 0.81
+    },
+    "issues": []
+  },
+  "pprof_summary": {
+    "cpu_gc_flat_pct": 0.09,
+    "cpu_gc_high": false,
+    "cpu_json_decode_pct": 0,
+    "cpu_cel_boundary_pct": 0,
+    "profiles_collected": [
+      "cpu",
+      "heap_final",
+      "heap_growth",
+      "block",
+      "mutex"
+    ]
+  }
+}

@@ -11,8 +11,5 @@
 venv/
 env/
 
-# Test run outputs (generated at runtime)
-runs/
-
 # macOS metadata
 .DS_Store

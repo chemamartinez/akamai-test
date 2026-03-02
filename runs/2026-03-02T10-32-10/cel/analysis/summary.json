@@ -1,0 +1,134 @@
+{
+  "input_type": "cel",
+  "run_config": {
+    "run_name": "2026-03-02T10-32-10",
+    "started_at": "2026-03-02T10:32:10Z",
+    "parameters": {
+      "duration": "30m",
+      "duration_secs": 1800,
+      "interval": "1m",
+      "initial_interval": "1h",
+      "event_limit": "50000",
+      "akamai_workers": "1",
+      "akamai_batch_size": "1000",
+      "input_type": "both",
+      "filebeat_binary": "/Users/chemamartinez/devel/akamai-test/../beats-akamai/x-pack/filebeat/filebeat"
+    },
+    "api_constants": {
+      "offset_ttl_s": 120,
+      "hmac_validity": "120s",
+      "note": "These reflect API server characteristics, not Filebeat configuration."
+    }
+  },
+  "monitoring": {
+    "duration": {
+      "start": "2026-03-02T11:33:16.112000+01:00",
+      "end": "2026-03-02T12:01:16.125000+01:00",
+      "elapsed_minutes": 28.0,
+      "snapshots": 29
+    },
+    "throughput": {
+      "total_events_published": 7128434,
+      "avg_eps": 4243.08
+    },
+    "pipeline": {
+      "avg_active_events": 816.7241379310345,
+      "max_active_events": 1915.0
+    },
+    "queue": {
+      "avg_fill_pct": 0.25516163793103447,
+      "max_fill_pct": 0.5978125
+    },
+    "output": {
+      "total_acked": 7350148,
+      "total_failed": 0,
+      "total_dropped": 0,
+      "avg_latency_mean": 0.0,
+      "avg_latency_p95": 0.0,
+      "avg_latency_p99": 0.0
+    },
+    "resources": {
+      "avg_cpu_total_ms": 54500.0,
+      "avg_memory_alloc_mb": 191.53,
+      "max_memory_alloc_mb": 308.24,
+      "avg_rss_mb": 636.37,
+      "max_rss_mb": 642.3,
+      "avg_goroutines": 37.41379310344828,
+      "max_goroutines": 41.0,
+      "avg_load_norm_1": 0.33957241379310343,
+      "max_load_norm_1": 0.4877,
+      "first_rss_mb": 596.81,
+      "last_rss_mb": 642.3
+    },
+    "issues": []
+  },
+  "input_metrics": {
+    "input_type": "cel",
+    "snapshots_count": 29,
+    "elapsed_secs": 1740,
+    "throughput": {
+      "total_events_published": 7100143,
+      "total_events_received": 7100143,
+      "total_batches_published": 143,
+      "total_http_requests": 144,
+      "http_2xx_total": 143,
+      "http_errors_total": 0,
+      "http_success_rate_pct": 99.31
+    },
+    "histograms": {
+      "batch_processing_time_ms": {
+        "count": 143,
+        "mean": 3199.245,
+        "median": 3213.638,
+        "min": 1374.576,
+        "max": 3256.54,
+        "p75": 3220.379,
+        "p95": 3241.536,
+        "p99": 3254.964,
+        "p999": 3256.54,
+        "stddev": 154.626
+      },
+      "http_round_trip_time_ms": {
+        "count": 144,
+        "mean": 469.187,
+        "median": 463.588,
+        "min": 419.886,
+        "max": 710.657,
+        "p75": 481.109,
+        "p95": 510.877,
+        "p99": 695.853,
+        "p999": 710.657,
+        "stddev": 34.132
+      },
+      "cel_processing_time_ms": {
+        "count": 143,
+        "mean": 8886.446,
+        "median": 8850.074,
+        "min": 498.275,
+        "max": 11186.677,
+        "p75": 8878.516,
+        "p95": 10023.922,
+        "p99": 10839.37,
+        "p999": 11186.677,
+        "stddev": 797.656
+      }
+    },
+    "cel": {
+      "cel_executions": 144
+    },
+    "issues": []
+  },
+  "pprof_summary": {
+    "cpu_gc_flat_pct": 0,
+    "cpu_gc_high": false,
+    "cpu_json_decode_pct": 0,
+    "cpu_cel_boundary_pct": 0,
+    "profiles_collected": [
+      "cpu",
+      "heap_final",
+      "heap_growth",
+      "block",
+      "mutex"
+    ]
+  }
+}

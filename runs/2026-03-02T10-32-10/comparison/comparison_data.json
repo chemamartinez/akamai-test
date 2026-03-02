@@ -1,0 +1,111 @@
+{
+  "throughput": {
+    "cel_events_published": 7100143,
+    "akamai_events_published": 27100000,
+    "cel_avg_eps_log": 4243.08,
+    "akamai_avg_eps_log": 16161.24,
+    "cel_http_success_rate_pct": 99.31,
+    "akamai_http_success_rate_pct": 100.0
+  },
+  "latency": {
+    "cel_http_rtt_ms": {
+      "count": 144,
+      "mean": 469.187,
+      "median": 463.588,
+      "min": 419.886,
+      "max": 710.657,
+      "p75": 481.109,
+      "p95": 510.877,
+      "p99": 695.853,
+      "p999": 710.657,
+      "stddev": 34.132
+    },
+    "akamai_http_rtt_ms": {
+      "count": 543,
+      "mean": 463.653,
+      "median": 459.71,
+      "min": 411.853,
+      "max": 829.793,
+      "p75": 471.477,
+      "p95": 501.907,
+      "p99": 597.714,
+      "p999": 829.793,
+      "stddev": 30.268
+    },
+    "cel_batch_processing_ms": {
+      "count": 143,
+      "mean": 3199.245,
+      "median": 3213.638,
+      "min": 1374.576,
+      "max": 3256.54,
+      "p75": 3220.379,
+      "p95": 3241.536,
+      "p99": 3254.964,
+      "p999": 3256.54,
+      "stddev": 154.626
+    },
+    "akamai_batch_processing_ms": {
+      "count": 542,
+      "mean": 2625.344,
+      "median": 2592.854,
+      "min": 2519.698,
+      "max": 4907.208,
+      "p75": 2618.855,
+      "p95": 2724.245,
+      "p99": 3676.5,
+      "p999": 4907.208,
+      "stddev": 180.463
+    },
+    "cel_cel_processing_ms": {
+      "count": 143,
+      "mean": 8886.446,
+      "median": 8850.074,
+      "min": 498.275,
+      "max": 11186.677,
+      "p75": 8878.516,
+      "p95": 10023.922,
+      "p99": 10839.37,
+      "p999": 11186.677,
+      "stddev": 797.656
+    },
+    "akamai_response_latency_ms": {
+      "count": 543,
+      "mean": 463.828,
+      "median": 459.861,
+      "min": 412.031,
+      "max": 829.944,
+      "p75": 471.66,
+      "p95": 502.057,
+      "p99": 597.87,
+      "p999": 829.944,
+      "stddev": 30.271
+    }
+  },
+  "resources": {
+    "cel_avg_rss_mb": 636.37,
+    "akamai_avg_rss_mb": 121.19,
+    "cel_max_rss_mb": 642.3,
+    "akamai_max_rss_mb": 123.23,
+    "cel_avg_memory_alloc_mb": 191.53,
+    "akamai_avg_memory_alloc_mb": 21.86,
+    "cel_max_memory_alloc_mb": 308.24,
+    "akamai_max_memory_alloc_mb": 30.01,
+    "cel_avg_goroutines": 37.41379310344828,
+    "akamai_avg_goroutines": 42.44827586206897,
+    "cel_avg_load_norm_1": 0.33957241379310343,
+    "akamai_avg_load_norm_1": 0.25696206896551727
+  },
+  "pprof": {
+    "cel_gc_overhead_pct": 0,
+    "akamai_gc_overhead_pct": 0.09,
+    "cel_json_decode_pct": 0,
+    "akamai_json_decode_pct": 0
+  },
+  "akamai_reliability": {
+    "offset_expired": 0,
+    "hmac_refresh": 0,
+    "cursor_drops": 0,
+    "api_400_fatal": 0,
+    "worker_utilization": 0.81
+  }
+}

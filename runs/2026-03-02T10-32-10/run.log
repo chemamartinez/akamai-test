@@ -1,0 +1,211 @@
+[2026-03-02T10:32:10Z] Test suite started
+[2026-03-02T10:32:10Z] Run directory: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10
+[2026-03-02T10:32:10Z] Wrote run_config.json
+[2026-03-02T10:32:10Z] ─────────────────────────────────────────────────────
+[2026-03-02T10:32:10Z] Starting CEL input run
+[2026-03-02T10:32:10Z]   Config:   /Users/chemamartinez/devel/akamai-test/configs/filebeat_cel.yml
+[2026-03-02T10:32:10Z]   Duration: 30m (1800s)
+[2026-03-02T10:32:10Z]   Logs:     /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel/logs
+[2026-03-02T10:32:10Z] Started input metrics collector (PID 67800)
+[2026-03-02T10:32:10Z] Started pprof collector (PID 67802)
+[2026-03-02T10:32:10Z] Launching filebeat: timeout 30m /Users/chemamartinez/devel/akamai-test/../beats-akamai/x-pack/filebeat/filebeat -c /Users/chemamartinez/devel/akamai-test/configs/filebeat_cel.yml
+[10:32:10] [input-metrics] Starting input metrics collection
+[2026-03-02T10:32:10Z] Filebeat started (PID 67808)
+[10:32:10] [input-metrics]   Endpoint:    http://localhost:5066/inputs/
+[10:32:10] [pprof] Starting pprof collection
+[10:32:10] [input-metrics]   Output dir:  /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel/input_metrics
+[10:32:10] [pprof]   Output dir:      /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel/pprof
+[10:32:10] [input-metrics]   Duration:    1800s
+[10:32:10] [pprof]   Baseline at:     30s
+[10:32:10] [input-metrics]   Poll every:  60s
+[10:32:10] [pprof]   CPU start at:    870s (30s duration)
+[10:32:10] [pprof]   Final at:        1785s
+[10:32:10] [pprof] Waiting 30s for baseline checkpoint...
+[10:32:40] [pprof] Fetching heap_baseline.pprof from http://localhost:5066/debug/pprof/heap
+[10:32:41] [pprof] Saved heap_baseline.pprof (  864509 bytes)
+[10:32:41] [pprof] Waiting 840s until CPU profile start checkpoint...
+[10:33:10] [input-metrics] Saved t0060.json
+[10:34:10] [input-metrics] Saved t0120.json
+[10:35:11] [input-metrics] Saved t0180.json
+[10:36:11] [input-metrics] Saved t0240.json
+[10:37:11] [input-metrics] Saved t0300.json
+[10:38:11] [input-metrics] Saved t0360.json
+[10:39:11] [input-metrics] Saved t0420.json
+[10:40:11] [input-metrics] Saved t0480.json
+[10:41:11] [input-metrics] Saved t0540.json
+[10:42:11] [input-metrics] Saved t0600.json
+[10:43:11] [input-metrics] Saved t0660.json
+[10:44:11] [input-metrics] Saved t0720.json
+[10:45:11] [input-metrics] Saved t0780.json
+[10:46:11] [input-metrics] Saved t0840.json
+[10:46:41] [pprof] Fetching cpu_midpoint.pprof from http://localhost:5066/debug/pprof/profile?seconds=30
+[10:47:11] [pprof] Saved cpu_midpoint.pprof (   31343 bytes)
+[10:47:11] [pprof] Waiting 885s until final checkpoint...
+[10:47:11] [input-metrics] Saved t0900.json
+[10:48:11] [input-metrics] Saved t0960.json
+[10:49:12] [input-metrics] Saved t1020.json
+[10:50:12] [input-metrics] Saved t1080.json
+[10:51:12] [input-metrics] Saved t1140.json
+[10:52:12] [input-metrics] Saved t1200.json
+[10:53:12] [input-metrics] Saved t1260.json
+[10:54:12] [input-metrics] Saved t1320.json
+[10:55:12] [input-metrics] Saved t1380.json
+[10:56:12] [input-metrics] Saved t1440.json
+[10:57:12] [input-metrics] Saved t1500.json
+[10:58:12] [input-metrics] Saved t1560.json
+[10:59:12] [input-metrics] Saved t1620.json
+[11:00:12] [input-metrics] Saved t1680.json
+[11:01:12] [input-metrics] Saved t1740.json
+[11:01:56] [pprof] Fetching heap_final.pprof from http://localhost:5066/debug/pprof/heap
+[11:01:57] [pprof] Saved heap_final.pprof (  902906 bytes)
+[11:01:57] [pprof] Fetching block_final.pprof from http://localhost:5066/debug/pprof/block
+[11:01:57] [pprof] Saved block_final.pprof (   15576 bytes)
+[11:01:57] [pprof] Fetching mutex_final.pprof from http://localhost:5066/debug/pprof/mutex
+[11:01:57] [pprof] Saved mutex_final.pprof (    6025 bytes)
+[11:01:57] [pprof] pprof collection finished
+[2026-03-02T11:02:12Z] Filebeat reached duration limit (timeout exit 124) — expected
+[11:02:12] [input-metrics] WARNING: curl failed at elapsed=1800s (filebeat may not be ready yet)
+[11:02:13] [input-metrics] Input metrics collection finished (1800s elapsed)
+[2026-03-02T11:02:14Z] Completed CEL input run
+[2026-03-02T11:02:14Z] ─────────────────────────────────────────────────────
+[2026-03-02T11:02:14Z] ─────────────────────────────────────────────────────
+[2026-03-02T11:02:14Z] Starting AKAMAI input run
+[2026-03-02T11:02:14Z]   Config:   /Users/chemamartinez/devel/akamai-test/configs/filebeat_akamai.yml
+[2026-03-02T11:02:14Z]   Duration: 30m (1800s)
+[2026-03-02T11:02:14Z]   Logs:     /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/logs
+[2026-03-02T11:02:14Z] Started input metrics collector (PID 77239)
+[2026-03-02T11:02:14Z] Started pprof collector (PID 77241)
+[2026-03-02T11:02:14Z] Launching filebeat: timeout 30m /Users/chemamartinez/devel/akamai-test/../beats-akamai/x-pack/filebeat/filebeat -c /Users/chemamartinez/devel/akamai-test/configs/filebeat_akamai.yml
+[2026-03-02T11:02:14Z] Filebeat started (PID 77246)
+[11:02:14] [input-metrics] Starting input metrics collection
+[11:02:14] [pprof] Starting pprof collection
+[11:02:14] [input-metrics]   Endpoint:    http://localhost:5066/inputs/
+[11:02:14] [pprof]   Output dir:      /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/pprof
+[11:02:14] [input-metrics]   Output dir:  /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/input_metrics
+[11:02:14] [pprof]   Baseline at:     30s
+[11:02:14] [input-metrics]   Duration:    1800s
+[11:02:14] [pprof]   CPU start at:    870s (30s duration)
+[11:02:14] [input-metrics]   Poll every:  60s
+[11:02:14] [pprof]   Final at:        1785s
+[11:02:14] [pprof] Waiting 30s for baseline checkpoint...
+[11:02:44] [pprof] Fetching heap_baseline.pprof from http://localhost:5066/debug/pprof/heap
+[11:02:44] [pprof] Saved heap_baseline.pprof (  106404 bytes)
+[11:02:44] [pprof] Waiting 840s until CPU profile start checkpoint...
+[11:03:14] [input-metrics] Saved t0060.json
+[11:04:14] [input-metrics] Saved t0120.json
+[11:05:15] [input-metrics] Saved t0180.json
+[11:06:15] [input-metrics] Saved t0240.json
+[11:07:15] [input-metrics] Saved t0300.json
+[11:08:15] [input-metrics] Saved t0360.json
+[11:09:15] [input-metrics] Saved t0420.json
+[11:10:15] [input-metrics] Saved t0480.json
+[11:11:15] [input-metrics] Saved t0540.json
+[11:12:15] [input-metrics] Saved t0600.json
+[11:13:15] [input-metrics] Saved t0660.json
+[11:14:15] [input-metrics] Saved t0720.json
+[11:15:15] [input-metrics] Saved t0780.json
+[11:16:15] [input-metrics] Saved t0840.json
+[11:16:44] [pprof] Fetching cpu_midpoint.pprof from http://localhost:5066/debug/pprof/profile?seconds=30
+[11:17:15] [pprof] Saved cpu_midpoint.pprof (   22468 bytes)
+[11:17:15] [pprof] Waiting 885s until final checkpoint...
+[11:17:15] [input-metrics] Saved t0900.json
+[11:18:16] [input-metrics] Saved t0960.json
+[11:19:16] [input-metrics] Saved t1020.json
+[11:20:16] [input-metrics] Saved t1080.json
+[11:21:16] [input-metrics] Saved t1140.json
+[11:22:16] [input-metrics] Saved t1200.json
+[11:23:16] [input-metrics] Saved t1260.json
+[11:24:16] [input-metrics] Saved t1320.json
+[11:25:16] [input-metrics] Saved t1380.json
+[11:26:16] [input-metrics] Saved t1440.json
+[11:27:16] [input-metrics] Saved t1500.json
+[11:28:16] [input-metrics] Saved t1560.json
+[11:29:16] [input-metrics] Saved t1620.json
+[11:30:16] [input-metrics] Saved t1680.json
+[11:31:16] [input-metrics] Saved t1740.json
+[11:32:00] [pprof] Fetching heap_final.pprof from http://localhost:5066/debug/pprof/heap
+[11:32:00] [pprof] Saved heap_final.pprof (  200250 bytes)
+[11:32:00] [pprof] Fetching block_final.pprof from http://localhost:5066/debug/pprof/block
+[11:32:00] [pprof] Saved block_final.pprof (   16059 bytes)
+[11:32:00] [pprof] Fetching mutex_final.pprof from http://localhost:5066/debug/pprof/mutex
+[11:32:00] [pprof] Saved mutex_final.pprof (    6540 bytes)
+[11:32:00] [pprof] pprof collection finished
+[2026-03-02T11:32:14Z] Filebeat reached duration limit (timeout exit 124) — expected
+[2026-03-02T11:32:16Z] Completed AKAMAI input run
+[2026-03-02T11:32:16Z] ─────────────────────────────────────────────────────
+[2026-03-02T11:32:16Z] Running single-run analysis for CEL...
+Analyzing CEL run in /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel
+  Report:  /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel/analysis/report.md
+  Summary: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/cel/analysis/summary.json
+
+  Total events published: 7,100,143
+  Avg EPS: 4243.1
+[2026-03-02T11:32:20Z] CEL analysis complete
+[2026-03-02T11:32:20Z] Running single-run analysis for Akamai...
+Analyzing AKAMAI run in /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai
+  Report:  /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/analysis/report.md
+  Summary: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/analysis/summary.json
+
+  Issues detected (1):
+    ⚠  growing_pipeline_active: possible backpressure
+
+  Total events published: 27,100,000
+  Avg EPS: 16161.2
+[2026-03-02T11:32:21Z] Akamai analysis complete
+[2026-03-02T11:32:21Z] Running comparison analysis...
+Generating comparison report in /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10
+  Comparison report: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/comparison/comparison_report.md
+
+  Headline results:
+    CEL   total events: 7,100,143
+    Akamai total events: 27,100,000
+    CEL   HTTP RTT mean: 469 ms
+    Akamai HTTP RTT mean: 464 ms
+[2026-03-02T11:32:22Z] Comparison analysis complete
+[2026-03-02T11:32:22Z] ANTHROPIC_API_KEY found — running AI-driven analysis...
+Running AI analysis for run in /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10
+  Building prompt from specs in /Users/chemamartinez/devel/akamai-test/specs/
+  Calling Claude claude-opus-4-6 (this may take up to 60 seconds)...
+Traceback (most recent call last):
+  File "/Users/chemamartinez/devel/akamai-test/analysis/analyze.py", line 246, in <module>
+    main()
+    ~~~~^^
+  File "/Users/chemamartinez/devel/akamai-test/analysis/analyze.py", line 242, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/Users/chemamartinez/devel/akamai-test/analysis/analyze.py", line 160, in cmd_ai_analyze
+    output_path = run_ai_analysis(
+        run_dir=run_dir,
+        run_config=run_config,
+        output_dir=output_dir,
+    )
+  File "/Users/chemamartinez/devel/akamai-test/analysis/ai_analysis.py", line 267, in run_ai_analysis
+    message = client.messages.create(
+        model=MODEL,
+    ...<2 lines>...
+        messages=[{"role": "user", "content": user_message}],
+    )
+  File "/opt/homebrew/lib/python3.14/site-packages/anthropic/_utils/_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/homebrew/lib/python3.14/site-packages/anthropic/resources/messages/messages.py", line 996, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/lib/python3.14/site-packages/anthropic/_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.14/site-packages/anthropic/_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CYeBPRCnKSvX9Hh73KoCQ'}
+[2026-03-02T11:32:23Z] WARNING: AI analysis failed (check run.log for details)
+[2026-03-02T11:32:23Z] ═══════════════════════════════════════════════════════
+[2026-03-02T11:32:23Z] Test suite finished
+[2026-03-02T11:32:23Z] Run directory: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10
+[2026-03-02T11:32:23Z] Comparison report: /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/comparison/comparison_report.md
+[2026-03-02T11:32:23Z] ═══════════════════════════════════════════════════════

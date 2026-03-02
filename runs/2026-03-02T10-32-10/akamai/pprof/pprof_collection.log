@@ -1,0 +1,19 @@
+[11:02:14] [pprof] Starting pprof collection
+[11:02:14] [pprof]   Output dir:      /Users/chemamartinez/devel/akamai-test/runs/2026-03-02T10-32-10/akamai/pprof
+[11:02:14] [pprof]   Baseline at:     30s
+[11:02:14] [pprof]   CPU start at:    870s (30s duration)
+[11:02:14] [pprof]   Final at:        1785s
+[11:02:14] [pprof] Waiting 30s for baseline checkpoint...
+[11:02:44] [pprof] Fetching heap_baseline.pprof from http://localhost:5066/debug/pprof/heap
+[11:02:44] [pprof] Saved heap_baseline.pprof (  106404 bytes)
+[11:02:44] [pprof] Waiting 840s until CPU profile start checkpoint...
+[11:16:44] [pprof] Fetching cpu_midpoint.pprof from http://localhost:5066/debug/pprof/profile?seconds=30
+[11:17:15] [pprof] Saved cpu_midpoint.pprof (   22468 bytes)
+[11:17:15] [pprof] Waiting 885s until final checkpoint...
+[11:32:00] [pprof] Fetching heap_final.pprof from http://localhost:5066/debug/pprof/heap
+[11:32:00] [pprof] Saved heap_final.pprof (  200250 bytes)
+[11:32:00] [pprof] Fetching block_final.pprof from http://localhost:5066/debug/pprof/block
+[11:32:00] [pprof] Saved block_final.pprof (   16059 bytes)
+[11:32:00] [pprof] Fetching mutex_final.pprof from http://localhost:5066/debug/pprof/mutex
+[11:32:00] [pprof] Saved mutex_final.pprof (    6540 bytes)
+[11:32:00] [pprof] pprof collection finished
