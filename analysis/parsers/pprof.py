@@ -162,7 +162,7 @@ def analyze_cpu(pprof_path: Path, top: int = 30) -> Optional[Dict[str, Any]]:
     """Analyze CPU profile."""
     if not pprof_path.exists():
         return None
-    output = _run_pprof(["-text", f"-top={top}", str(pprof_path)])
+    output = _run_pprof(["-text", f"-nodecount={top}", str(pprof_path)])
     if not output:
         return None
     entries = parse_pprof_text(output)
@@ -179,7 +179,7 @@ def analyze_heap(pprof_path: Path, top: int = 20) -> Optional[Dict[str, Any]]:
     """Analyze heap profile (in-use space)."""
     if not pprof_path.exists():
         return None
-    output = _run_pprof(["-text", "-inuse_space", f"-top={top}", str(pprof_path)])
+    output = _run_pprof(["-text", "-inuse_space", f"-nodecount={top}", str(pprof_path)])
     if not output:
         return None
     entries = parse_pprof_text(output)
@@ -214,7 +214,7 @@ def analyze_contention(pprof_path: Path, profile_type: str, top: int = 20) -> Op
     """Analyze block or mutex contention profile."""
     if not pprof_path.exists():
         return None
-    output = _run_pprof(["-text", f"-top={top}", str(pprof_path)])
+    output = _run_pprof(["-text", f"-nodecount={top}", str(pprof_path)])
     if not output:
         return None
     entries = parse_pprof_text(output)

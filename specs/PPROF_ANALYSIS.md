@@ -80,13 +80,55 @@ curl -sf http://localhost:5066/debug/pprof/mutex -o mutex_final.pprof
 
 ---
 
+## Analysis Pipeline
+
+Each profile collected by `bin/collect_pprof.sh` is analysed by `analysis/parsers/pprof.py` using `go tool pprof -text`. The table below maps each file to what it captures and the analysis performed on it.
+
+### Files collected per run
+
+| File | When | What it captures |
+|------|------|-----------------|
+| `heap_baseline.pprof` | t = 30s | Point-in-time snapshot of live heap allocations at run start |
+| `cpu_midpoint.pprof` | t = D/2 − 30s … D/2 | 30-second CPU sample window centred at the run midpoint |
+| `heap_final.pprof` | t = D − 15s | Point-in-time snapshot of live heap allocations near run end |
+| `block_final.pprof` | t = D − 15s | Goroutine blocking events accumulated since run start |
+| `mutex_final.pprof` | t = D − 15s | Mutex contention events accumulated since run start |
+
+### Analysis performed on each file
+
+```
+heap_baseline ──┐
+                ├─ pprof -text -inuse_space -base baseline final  →  heap_growth: which functions grew
+heap_final   ───┘
+
+heap_final ────── pprof -text -inuse_space final                  →  heap_final: absolute in-use memory at run end
+
+cpu_midpoint ──── pprof -text cpu_midpoint                        →  cpu: function breakdown for the 30s window
+
+block_final ───── pprof -text block_final                         →  block: goroutine blocking by function
+mutex_final ───── pprof -text mutex_final                         →  mutex: mutex contention by function
+```
+
+### Comparison axis per profile type
+
+CPU and heap have different comparison axes, which is important for interpreting results:
+
+| Profile | Within-run comparison | Cross-run (CEL vs Akamai) |
+|---------|----------------------|--------------------------|
+| `heap_baseline` → `heap_final` | Yes — `heap_growth` diff shows memory growth over the run | Yes — compare growth paths between CEL and Akamai |
+| `heap_final` (absolute) | No | Yes — compare in-use memory at equivalent point in each run |
+| `cpu_midpoint` | No — see below | Yes — primary comparison axis |
+| `block_final`, `mutex_final` | No | Yes — compare contention between CEL and Akamai |
+
+---
+
 ## Analysis Commands (CLI only, no web UI)
 
 ### CPU profile
 
 ```bash
 # Top 30 functions by CPU flat%
-go tool pprof -text -top 30 cpu_midpoint.pprof
+go tool pprof -text -nodecount=30 cpu_midpoint.pprof
 
 # Full interactive session
 go tool pprof cpu_midpoint.pprof
@@ -97,10 +139,10 @@ go tool pprof cpu_midpoint.pprof
 
 ```bash
 # Top 20 by in-use space
-go tool pprof -text -inuse_space -top 20 heap_final.pprof
+go tool pprof -text -inuse_space -nodecount=20 heap_final.pprof
 
 # Top 20 by allocated objects
-go tool pprof -text -alloc_objects -top 20 heap_final.pprof
+go tool pprof -text -alloc_objects -nodecount=20 heap_final.pprof
 ```
 
 ### Heap growth (baseline → final diff)
@@ -113,8 +155,8 @@ go tool pprof -text -inuse_space -base heap_baseline.pprof heap_final.pprof
 ### Block / Mutex contention
 
 ```bash
-go tool pprof -text -top 20 block_final.pprof
-go tool pprof -text -top 20 mutex_final.pprof
+go tool pprof -text -nodecount=20 block_final.pprof
+go tool pprof -text -nodecount=20 mutex_final.pprof
 ```
 
 ---
@@ -204,8 +246,8 @@ The analysis script (`parsers/pprof.py`) runs `go tool pprof -text` and parses t
 
 ```bash
 # Extract top functions for both runs
-go tool pprof -text -top 30 runs/my-run/cel/pprof/cpu_midpoint.pprof > /tmp/cel_cpu.txt
-go tool pprof -text -top 30 runs/my-run/akamai/pprof/cpu_midpoint.pprof > /tmp/akamai_cpu.txt
+go tool pprof -text -nodecount=30 runs/my-run/cel/pprof/cpu_midpoint.pprof > /tmp/cel_cpu.txt
+go tool pprof -text -nodecount=30 runs/my-run/akamai/pprof/cpu_midpoint.pprof > /tmp/akamai_cpu.txt
 
 # Compare side by side
 diff /tmp/cel_cpu.txt /tmp/akamai_cpu.txt
