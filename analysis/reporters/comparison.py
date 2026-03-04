@@ -102,6 +102,7 @@ def run_comparison(
         )
 
     params = run_config.get("parameters", {})
+    api_constants = run_config.get("api_constants", {})
     comparison_data = _build_comparison_data(cel_summary, akamai_summary)
 
     # Write comparison_data.json
@@ -114,7 +115,7 @@ def run_comparison(
         _plot_comparisons(cel_summary, akamai_summary, output_dir / "plots")
 
     # Write comparison_report.md
-    report = _build_report_md(comparison_data, cel_summary, akamai_summary, params, output_dir)
+    report = _build_report_md(comparison_data, cel_summary, akamai_summary, params, api_constants, output_dir)
     (output_dir / "comparison_report.md").write_text(report)
 
     return comparison_data
@@ -204,17 +205,29 @@ def _build_report_md(
     cel: Optional[Dict],
     akamai: Optional[Dict],
     params: Dict[str, Any],
+    api_constants: Dict[str, Any],
     output_dir: Path,
 ) -> str:
-    lines = [
-        "# CEL vs Akamai — Performance Comparison Report\n",
-        "## Test Parameters\n",
-        f"| Parameter | Value |",
-        f"|-----------|-------|",
+    api_eps = api_constants.get("api_eps")
+    rows = [
         f"| Duration | {params.get('duration', 'N/A')} |",
         f"| Interval | {params.get('interval', 'N/A')} |",
         f"| Initial interval | {params.get('initial_interval', 'N/A')} |",
         f"| Event limit | {params.get('event_limit', 'N/A')} |",
+        f"| Akamai workers | {params.get('akamai_workers', 'N/A')} |",
+        f"| Akamai batch size | {params.get('akamai_batch_size', 'N/A')} |",
+        f"| API offset TTL | {api_constants.get('offset_ttl_s', 'N/A')} s |",
+        f"| API HMAC validity | {api_constants.get('hmac_validity_s', 'N/A')} s |",
+    ]
+    if api_eps is not None:
+        rows.append(f"| API EPS | {api_eps} |")
+
+    lines = [
+        "# CEL vs Akamai — Performance Comparison Report\n",
+        "## Test Parameters\n",
+        "| Parameter | Value |",
+        "|-----------|-------|",
+        *rows,
         "",
         "> **Note**: Runs are sequential (CEL first, then Akamai) using the same parameters.",
         "> Minor differences in API server state or network conditions may affect results.",

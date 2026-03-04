@@ -181,13 +181,11 @@ config = {
         "akamai_workers": "${AKAMAI_WORKERS}",
         "akamai_batch_size": "${AKAMAI_BATCH_SIZE}",
         "input_type": "${INPUT_TYPE}",
-        "filebeat_binary": "${FILEBEAT_BINARY}",
     },
     "api_constants": {
         "offset_ttl_s": ${API_OFFSET_TTL_S},
         "hmac_validity_s": ${API_HMAC_VALIDITY_S},
         "api_eps": ${API_EPS:-null},
-        "note": "These reflect API server characteristics, not Filebeat configuration."
     }
 }
 with open("${RUN_DIR}/run_config.json", "w") as f:
