@@ -470,8 +470,43 @@ def _plot_comparisons(
     plots_dir: Path,
 ) -> None:
     """Generate comparison PNG plots."""
+    _plot_throughput_bars(cel, akamai, plots_dir)
     _plot_latency_bars(cel, akamai, plots_dir)
     _plot_resource_bars(cel, akamai, plots_dir)
+
+
+def _plot_throughput_bars(
+    cel: Optional[Dict[str, Any]],
+    akamai: Optional[Dict[str, Any]],
+    plots_dir: Path,
+) -> None:
+    cel_eps = _safe_get(cel, "monitoring", "throughput", "avg_eps") or 0
+    ak_eps = _safe_get(akamai, "monitoring", "throughput", "avg_eps") or 0
+    cel_total = _safe_get(cel, "input_metrics", "throughput", "total_events_published") or 0
+    ak_total = _safe_get(akamai, "input_metrics", "throughput", "total_events_published") or 0
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    fig.suptitle("Throughput Comparison: CEL vs Akamai", fontsize=13)
+
+    # Average EPS
+    ax1.bar(["CEL", "Akamai"], [cel_eps, ak_eps], color=["#4A90D9", "#E8784D"])
+    ax1.set_title("Average EPS (monitoring log)")
+    ax1.set_ylabel("Events / second")
+    for i, v in enumerate([cel_eps, ak_eps]):
+        if v:
+            ax1.text(i, v * 1.01, f"{v:,.0f}", ha="center", va="bottom", fontsize=10)
+
+    # Total events
+    ax2.bar(["CEL", "Akamai"], [cel_total, ak_total], color=["#4A90D9", "#E8784D"])
+    ax2.set_title("Total Events Published (/inputs/)")
+    ax2.set_ylabel("Events")
+    for i, v in enumerate([cel_total, ak_total]):
+        if v:
+            ax2.text(i, v * 1.01, f"{v:,.0f}", ha="center", va="bottom", fontsize=10)
+
+    plt.tight_layout()
+    plt.savefig(plots_dir / "throughput_comparison.png", dpi=120)
+    plt.close(fig)
 
 
 def _plot_latency_bars(
