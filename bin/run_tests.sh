@@ -22,6 +22,7 @@ AKAMAI_WORKERS="1"
 AKAMAI_BATCH_SIZE="1000"
 INPUT_TYPE="both"
 RUN_NAME=""
+API_EPS=""
 FILEBEAT_BINARY="${SUITE_DIR}/../beats-akamai/x-pack/filebeat/filebeat"
 AKAMAI_URL=""
 CLIENT_TOKEN=""
@@ -31,8 +32,9 @@ ACCESS_TOKEN=""
 # ── Hardcoded API server constants (not Filebeat config) ──────────────────────
 # These reflect characteristics of the Akamai SIEM test server environment.
 # They are documented here for reproducibility, but not passed to Filebeat.
+# All time values are in seconds (integer).
 readonly API_OFFSET_TTL_S=120          # Offset token validity on API server (seconds)
-readonly API_HMAC_VALIDITY="120s"      # HMAC auth signature timestamp validity window (server-side)
+readonly API_HMAC_VALIDITY_S=120       # HMAC auth signature timestamp validity window (seconds)
 
 # ── Usage ─────────────────────────────────────────────────────────────────────
 usage() {
@@ -57,6 +59,7 @@ Run control:
                             (Akamai input only)
   --input-type TYPE         Which inputs to test: cel | akamai | both. Default: ${INPUT_TYPE}
   --run-name NAME           Name for this test run. Default: ISO8601 timestamp
+  --api-eps N               Expected API events per second (for result context). Optional.
 
 Paths:
   --filebeat-binary PATH    Path to filebeat binary. Default: ${FILEBEAT_BINARY}
@@ -81,6 +84,7 @@ while [[ $# -gt 0 ]]; do
         --akamai-batch-size) AKAMAI_BATCH_SIZE="$2";  shift 2 ;;
         --input-type)       INPUT_TYPE="$2";          shift 2 ;;
         --run-name)         RUN_NAME="$2";            shift 2 ;;
+        --api-eps)          API_EPS="$2";             shift 2 ;;
         --filebeat-binary)  FILEBEAT_BINARY="$2";     shift 2 ;;
         --help|-h)          usage ;;
         *)                  echo "Unknown option: $1" >&2; usage ;;
@@ -181,7 +185,8 @@ config = {
     },
     "api_constants": {
         "offset_ttl_s": ${API_OFFSET_TTL_S},
-        "hmac_validity": "${API_HMAC_VALIDITY}",
+        "hmac_validity_s": ${API_HMAC_VALIDITY_S},
+        "api_eps": ${API_EPS:-null},
         "note": "These reflect API server characteristics, not Filebeat configuration."
     }
 }
