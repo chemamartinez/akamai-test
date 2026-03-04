@@ -1,0 +1,21 @@
+{
+  "run_name": "2026-03-04T14-04-40",
+  "started_at": "2026-03-04T14:04:40Z",
+  "parameters": {
+    "duration": "60m",
+    "duration_secs": 3600,
+    "interval": "1m",
+    "initial_interval": "1h",
+    "event_limit": "60000",
+    "akamai_workers": "1",
+    "akamai_batch_size": "1000",
+    "input_type": "both",
+    "filebeat_binary": "/Users/chemamartinez/devel/akamai-test/../beats-akamai/x-pack/filebeat/filebeat"
+  },
+  "api_constants": {
+    "offset_ttl_s": 120,
+    "hmac_validity_s": 120,
+    "api_eps": 10000,
+    "note": "These reflect API server characteristics, not Filebeat configuration."
+  }
+}
